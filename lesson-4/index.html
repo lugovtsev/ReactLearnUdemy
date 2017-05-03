@@ -15,7 +15,7 @@
 <body>
   <div id="app"></div>
   <script type="text/babel">
-    var SecondComponent = React.createClass({
+  /*  var SecondComponent = React.createClass({
       propTypes: {
         name: React.PropTypes.string.isRequired,
         location: React.PropTypes.string.isRequired
@@ -38,13 +38,43 @@
       }
     });
 
-    /*SecondComponent.propTypes = {
-      name: React.PropTypes.number,
-      location: React.PropTypes.string.isRequired
-    }*/
+    // SecondComponent.propTypes = {
+    //   name: React.PropTypes.number,
+    //   location: React.PropTypes.string.isRequired
+    // }
 
     ReactDOM.render(
       <SecondComponent name="Andrey" location="SPB"/>,
+      document.getElementById('app')
+    );
+*/
+
+    class TemporaryComponent extends React.Component {
+    /*  constructor(props) {
+        super(props)
+      }*/
+      static defaultProps = {
+        name: "Petr",
+        location: "Armavir",
+      }
+      static propTypes = {
+        name: React.PropTypes.number.isRequired,
+        location: React.PropTypes.string.isRequired,
+      }
+      render() {
+      //  let name = this.props.name;
+      //  let location = this.props.location;
+        return (
+          <div>
+            <p>Hello, {this.props.name}!</p>
+            <p>I live in {this.props.location}</p>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <TemporaryComponent name="Andrey22" location="SPB22" />,
       document.getElementById('app')
     );
   </script>
