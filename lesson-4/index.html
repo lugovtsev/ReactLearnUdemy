@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>React tutorial</title>
+  <title>React tutorial - props</title>
   <script src="https://unpkg.com/react@15/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
@@ -49,32 +49,35 @@
     );
 */
 
+
     class TemporaryComponent extends React.Component {
-    /*  constructor(props) {
-        super(props)
-      }*/
-      static defaultProps = {
-        name: "Petr",
-        location: "Armavir",
-      }
-      static propTypes = {
-        name: React.PropTypes.number.isRequired,
-        location: React.PropTypes.string.isRequired,
-      }
+      // constructor(props) {
+      //   super(props)
+      // }
       render() {
-      //  let name = this.props.name;
-      //  let location = this.props.location;
+        let name = this.props.name;
+        let location = this.props.location;
         return (
           <div>
-            <p>Hello, {this.props.name}!</p>
-            <p>I live in {this.props.location}</p>
+            <p>Hello, {name}!</p>
+            <p>I live in {location}</p>
           </div>
         )
       }
     }
 
+    TemporaryComponent.defaultProps = {
+        name: "Petr",
+        location: "Armavir",
+      }
+
+    TemporaryComponent.propTypes = {
+      name: React.PropTypes.string.isRequired,
+      location: React.PropTypes.string.isRequired,
+    }
+
     ReactDOM.render(
-      <TemporaryComponent name="Andrey22" location="SPB22" />,
+      <TemporaryComponent name="Andrey" location="SPB" />,
       document.getElementById('app')
     );
   </script>
