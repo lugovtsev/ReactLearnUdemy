@@ -17,75 +17,47 @@
           sum: 0
         }
       },
-      // plusOne: function() {
-      //   this.setState({
-      //     sum: this.state.sum + 1
-      //   })
-      // },
-      // plusFive: function() {
-      //   this.setState({
-      //     sum: this.state.sum + 5
-      //   })
-      // },
-      // plusTen: function() {
-      //   this.setState({
-      //     sum: this.state.sum + 10
-      //   })
-      // },
+      getDefaultProps: function(value) {
+        return {
+          valueOne: 1,
+          valueTwo: 5,
+          valueTree: 10,
+          text: 'Add'
+        }
+      },
       incrementCount: function(value) {
         this.setState({
           sum: this.state.sum + value
         })
       },
+      alert: function() {
+        alert('But clicked');
+      },
       render: function() {
         return (
           <div className="container">
             <h1>Sum: {this.state.sum}</h1>
-            <button onClick={this.incrementCount.bind(this, 1)} className="btn blue-btn">Add 1</button>
-            <button onClick={this.incrementCount.bind(this, 5)} className="btn purple-btn">Add 5</button>
-            <button onClick={this.incrementCount.bind(this, 10)} className="btn green-btn">Add 10</button>
+            <Button text={`${this.props.text} ${this.props.valueOne}`} style="btn blue-btn" value={this.props.valueOne} clickHandler={this.incrementCount.bind(this, this.props.valueOne)}/>
+            <Button text={`${this.props.text} ${this.props.valueTwo}`} style="btn green-btn" value={this.props.valueTwo} clickHandler={this.incrementCount.bind(this, this.props.valueTwo)}/>
+            <Button text={`${this.props.text} ${this.props.valueTree}`} style="btn purple-btn" value={this.props.valueTree} clickHandler={this.incrementCount.bind(this, this.props.valueTree)}/>
+            <Button text="Alert!" clickHandler={this.alert} />
           </div>
         )
       }
     });
 
+    var Button = function(props) {
+      return (
+        <button className={props.style} value={props.value} onClick={props.clickHandler}>{props.text}</button>
+      )
+    };
+
     ReactDOM.render(
-      <CounterComponent />,
+      <CounterComponent valueOne={30} valueTwo={50} valueTree={70} />,
       document.getElementById('app')
     );
 
-  /*  class NameStateComponent extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {
-          name: ''
-        }
-        // resetName() {
-        //   this.setState({
-        //     name: ''
-        //   })
-        // }
-        // nameChanged(event) {
-        //   this.setState({
-        //     name: event.target.value
-        //   })
-        // }
-      }
-      render() {
-        return (
-          <div>
-            <input type="text" onChange={this.nameChanged} />
-            <h1>Hello, {this.state.name}</h1>
-            <button onClick={this.resetName}>Reset name</button>
-          </div>
-        )
-      }
-    }
 
-    ReactDOM.render(
-      <NameStateComponent />,
-      document.getElementById('app')
-    );*/
   </script>
 </body>
 </html>

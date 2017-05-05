@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>React tutorial - Lifecycle</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    var LifecycleComponent = React.createClass({
+      increment: function() {
+        this.setState({
+          count: this.state.count + 1
+        })
+      },
+      //before rendered
+      getDefaultProps: function() {
+        console.log('getDefaultProps');
+      },
+      getInitialState: function() {
+        console.log('getInitialState');
+        return ({
+          count: 0
+        })
+      },
+      componentWillMount: function() {
+        console.log(this.state);
+        console.log(this.props);
+        console.log('componentWillMount');
+        //console.log(ReactDOM.findDOMNode(this));
+      },
+      render: function() {
+        console.log('component rendered');
+        return (
+          <button onClick={this.increment}>{this.state.count}</button>
+        )
+      },
+      componentDidMount: function() {
+        console.log(this.state);
+        console.log(this.props);
+        console.log('componentDidMount');
+        console.log(ReactDOM.findDOMNode(this));
+      }
+    });
+
+    ReactDOM.render(
+      <LifecycleComponent />,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>
