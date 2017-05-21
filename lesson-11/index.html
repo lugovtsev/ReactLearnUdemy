@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>React tutorial - class ES 6 </title>
+  <title>React tutorial - stateless components ES6</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
@@ -14,24 +14,26 @@
     class Counter extends React.Component {
       constructor(props) {
         super(props);
-        console.log(props);
-        this.state = {count: 0}
         this.click = this.click.bind(this);
       }
-      click(val) {
-        //alert("clicked");
-        console.log(val)
+      click() {
+        console.log("Clicked")
       }
       render() {
         console.log(this)
         return (
-          <div onClick={() => this.click(10)}>{this.props.text}</div>
+          <div className="container">
+            <Button className="btn blue-btn" clickHandler={this.click} text="Click me" />
+          </div>
         )
       }
     }
 
-    Counter.defaultProps = { text: "hello prop" }
-    Counter.propTypes = { text: React.PropTypes.string }
+    const Button = (props) => {
+      return (
+        <button className={props.className} onClick={props.clickHandler}>{props.text}</button>
+      )
+    }
 
     ReactDOM.render(
       <Counter />,

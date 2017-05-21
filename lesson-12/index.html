@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>React tutorial - Higher Order Components</title>
+  <script src="https://unpkg.com/react@15/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    let BaseCount = (BasicComponent) => class extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          count: 0,
+          text: "hello"
+        }
+        this.incrementCount = this.incrementCount.bind(this);
+      }
+      incrementCount() {
+        this.setState({
+          count: this.state.count + 1
+        })
+      }
+      render() {
+        return (
+          <div className="container">
+            <BasicComponent {...this.state} increment={this.incrementCount} />
+          </div>
+        )
+      }
+    }
+
+    const Button = (props) => {
+      console.log(props)
+      return (
+        <button className="btn blue-btn" onClick={props.increment}>Count: {props.count}</button>
+      )
+    }
+
+    const Label = (props) => {
+      return (
+        <label onMouseMove={props.increment}>Count: {props.count}</label>
+      )
+    }
+
+    let EtendedButton = BaseCount(Button);
+    let EtendedLabel = BaseCount(Label);
+
+    const Container = () => {
+        return(
+          <div>
+            <EtendedButton />
+            <EtendedLabel />
+          </div>
+        )
+    }
+
+    ReactDOM.render(
+      <Container />,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>

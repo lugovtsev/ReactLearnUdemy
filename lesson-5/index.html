@@ -53,21 +53,21 @@
         this.state = {
           name: ''
         }
+		}
         // resetName() {
         //   this.setState({
         //     name: ''
         //   })
         // }
-        // nameChanged(event) {
-        //   this.setState({
-        //     name: event.target.value
-        //   })
-        // }
-      }
+         nameChanged(event) {
+           this.setState({
+             name: event.target.value
+           })
+         }
       render() {
         return (
           <div>
-            <input type="text" onChange={this.nameChanged} />
+            <input type="text" onChange={this.nameChanged.bind(this)} />
             <h1>Hello, {this.state.name}</h1>
             <button onClick={this.resetName}>Reset name</button>
           </div>

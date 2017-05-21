@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>React tutorial - State</title>
+  <script src="https://unpkg.com/react@15/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    class CounterComponent extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { sum: 0 }
+        this.incrementCount = this.incrementCount.bind(this);
+      }
+      incrementCount(value) {
+        this.setState({
+          sum: this.state.sum + value
+        })
+      }
+      render() {
+        return (
+          <div className="container">
+            <h1>Sum: {this.state.sum}</h1>
+            <Button text={`${this.props.text} ${this.props.valueOne}`} style="btn blue-btn" value={this.props.valueOne} clickHandler={() => this.incrementCount(this.props.valueOne)}/>
+            <Button text={`${this.props.text} ${this.props.valueTwo}`} style="btn green-btn" value={this.props.valueTwo} clickHandler={() => this.incrementCount(this.props.valueTwo)}/>
+            <Button text={`${this.props.text} ${this.props.valueTree}`} style="btn purple-btn" value={this.props.valueTree} clickHandler={() => this.incrementCount(this.props.valueTree)}/>
+          </div>
+        )
+      }
+    };
+
+    CounterComponent.defaultProps = {
+      valueOne: 10,
+      valueTwo: 50,
+      valueTree: 100,
+      text: 'Add'
+    }
+
+    const Button = (props) => {
+      return (
+        <button className={props.style} value={props.value} onClick={props.clickHandler}>{props.text}</button>
+      )
+    };
+
+    Button.propTypes = {
+      text: React.PropTypes.string,
+      style: React.PropTypes.string,
+      value: React.PropTypes.number,
+      clickHandler: React.PropTypes.func.isRequired
+    }
+
+    ReactDOM.render(
+      <CounterComponent valueOne={30} valueTwo={50} valueTree={70} />,
+      document.getElementById('app')
+    );
+
+
+  </script>
+</body>
+</html>
