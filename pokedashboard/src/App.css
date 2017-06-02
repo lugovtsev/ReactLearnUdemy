@@ -31,3 +31,17 @@ button.PokeList-item {
 button.PokeList-item:focus {
   outline: none;
 }
+
+.Aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Aligner-item {
+  max-width: 50%
+}
+
+#contained-modal-title {
+  text-transform: capitalize;
+}
