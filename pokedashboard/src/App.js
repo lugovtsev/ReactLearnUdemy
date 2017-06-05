@@ -29,6 +29,7 @@ class App extends Component {
   loadPokemon(url) {
     fetch(url)
       .then(response => {
+        console.log(response.json());
         return response.json();
       }).then(json => {
         let pages = Math.ceil(json.count / this.state.limit);
