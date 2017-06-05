@@ -22,3 +22,26 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+button.PokeList-item {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+button.PokeList-item:focus {
+  outline: none;
+}
+
+.Aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Aligner-item {
+  max-width: 50%
+}
+
+#contained-modal-title {
+  text-transform: capitalize;
+}

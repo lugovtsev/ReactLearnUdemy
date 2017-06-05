@@ -17,13 +17,15 @@ class App extends Component {
       totalPages: 0,
       count: 0,
       loaded: false,
-      showModal: false
+      showModal: false,
+      selectedPokemon: null
     };
 
     this.loadPokemon = this.loadPokemon.bind(this);
     this.handlePaginationSelect = this.handlePaginationSelect.bind(this);
     this.handleLimitChange = this.handleLimitChange.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   loadPokemon(url) {
@@ -49,7 +51,6 @@ class App extends Component {
   }
 
   handlePaginationSelect(selectPage) {
-    console.log(selectPage);
     this.setState({activePage: selectPage});
     let offset = this.state.limit * (selectPage-1);
     this.loadPokemon(`${this.props.baseUrl}/pokemon/?limit=${this.state.limit}&offset=${offset}`);
@@ -64,16 +65,27 @@ class App extends Component {
     })
   }
 
-  toggleModal() {
-    if (this.state.showModal === true) {
-      this.setState({
-        showModal: false
-      })
-    } else {
-      this.setState({
-        showModal: true
+  openModal(pokemon) {
+    if (pokemon.url !== undefined) {
+      fetch(`${pokemon.url}`)
+      .then(response => {
+        return response.json();
+      }).then(json => {
+        console.log(json);
+        this.setState({
+          selectedPokemon: json,
+          showModal: true
+        })
+      }).catch(err => {
+        console.log(err)
       })
     }
+  }
+
+  closeModal() {
+    this.setState({
+      showModal: false
+    })
   }
 
   render() {
@@ -95,11 +107,13 @@ class App extends Component {
           totalPages={this.state.totalPages}
           activePage={this.state.activePage}
           onSelect={this.handlePaginationSelect}
+          openModal={this.openModal}
         />
         <PokemonModal
-          toggleModal={this.toggleModal}
+          closeModal={this.closeModal}
           showModal={this.state.showModal}
-          />
+          pokemon={this.state.selectedPokemon}
+        />
       </div>
     );
   }
