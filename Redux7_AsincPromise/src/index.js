@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
-import thunk from 'redux-thunk';
+import promise from 'redux-promise-middleware';
 import axios from 'axios';
 
 const initalState = {
@@ -26,17 +26,17 @@ function userReducer(state=initalState, action) {
   };
 
   switch (action.type) {
-    case 'GET_USER':
+    case 'FETCH_USER_PENDING':
       return {...state, sendingRequest: true, status: 'Pending...', statusClass: 'pending'}
       break;
-    case 'USER_RECIEVED':
-      user.name = `${action.payload[0].name.first} ${action.payload[0].name.last}`
-      user.email = action.payload[0].email;
-      user.gender = action.payload[0].gender;
-      user.pic = action.payload[0].picture.large;
+    case 'FETCH_USER_FULFILLED':
+      user.name = `${action.payload.data.results[0].name.first} ${action.payload.data.results[0].name.last}`
+      user.email = action.payload.data.results[0].email;
+      user.gender = action.payload.data.results[0].gender;
+      user.pic = action.payload.data.results[0].picture.large;
       return {...state, sendingRequest: false, user, status: 'User Recieved', statusClass: 'success'}
     break;
-    case 'ERROR':
+    case 'FETCH_USER_REJECTED':
     return {...state, sendingRequest: false, status: `${action.payload.message}`, statusClass: 'error'}
     default:
       return state
@@ -44,7 +44,7 @@ function userReducer(state=initalState, action) {
 }
 
 // STORE
-const store = createStore(userReducer, applyMiddleware(logger(), thunk));
+const store = createStore(userReducer, applyMiddleware(logger(), promise()));
 const nameEl = document.getElementById('name');
 const emailEl = document.getElementById('email');
 const genderEl = document.getElementById('gender');
@@ -67,22 +67,8 @@ store.subscribe(render)
 // ACTIONS
 document.getElementById('getUser')
   .addEventListener('click', function () {
-    store.dispatch(dispatch => {
-      // ASYNC ACTION
-      // dispatch action
-      dispatch({type: 'GET_USER'});
-      // do the xhr request
-      axios.get('https://randomuser.me/api/')
-      // handle response
-      // success
-        .then(response => {
-          dispatch({type: 'USER_RECIEVED', payload: response.data.results})
-        })
-      // error
-      .catch(error => {
-        dispatch({ type: 'ERROR', payload: error})
-      })
-      dispatch({type: 'AFTER ASYNC ACTION'});
-    });
-
+    store.dispatch({
+      type : 'FETCH_USER',
+      payload: axios.get("https://randomuser.me/api/")
+    })
   })
